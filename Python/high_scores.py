@@ -9,13 +9,8 @@ def personal_best(scores):
 
 
 def personal_top_three(scores):
-    top_three = []
     if len(scores) >= 3:
-        for _ in range(3):
-            top_three.append(max(scores))
-            scores.remove(max(scores))
+        top_three = sorted(scores, reverse=True)[:3].copy()
     else:
-        while scores != []:
-            top_three.append(max(scores))
-            scores.remove(max(scores))
+        top_three = sorted(scores, reverse=True).copy()
     return top_three
