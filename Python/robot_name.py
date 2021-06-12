@@ -1,35 +1,26 @@
 #!/usr/bin/env python3
 
 import random
+import string
 
 
 class Robot:
-    robots = []
+    existing_robots = set()
+
+    @staticmethod
+    def generate_robot_name():
+        while True:
+            new_name = ''.join(random.choices(string.ascii_uppercase, k=2) +
+                               random.choices(string.digits, k=3))
+            if new_name not in Robot.existing_robots:
+                Robot.existing_robots.add(new_name)
+                break
+        return new_name
 
     def __init__(self):
-        while True:
-            self.name = ''
-            for _ in range(2):
-                self.name += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[random.randint(0, 25)]
-            for _ in range(3):
-                self.name += str(random.randint(0, 9))
-            if self.name not in Robot.robots:
-                Robot.robots.append(self.name)
-                break
-            else:
-                continue
+        self.name = Robot.generate_robot_name()
 
     def reset(self):
         previous_name = self.name
-        while True:
-            self.name = ''
-            for _ in range(2):
-                self.name += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'[random.randint(0, 25)]
-            for _ in range(3):
-                self.name += str(random.randint(0, 9))
-            if self.name not in Robot.robots:
-                Robot.robots.append(self.name)
-                break
-            else:
-                continue
-        Robot.robots.remove(previous_name)
+        self.name = Robot.generate_robot_name()
+        Robot.existing_robots.remove(previous_name)
