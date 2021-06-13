@@ -2,8 +2,5 @@
 
 def is_isogram(string: str):
     only_letters = string.lower().replace(' ', '').replace('-', '')
-    letters_only_once = list(set(only_letters))
-    if sorted(only_letters) == sorted(letters_only_once):
-        return True
-    else:
-        return False
+    letters_only_once = set(only_letters)
+    return len(only_letters) == len(letters_only_once)
